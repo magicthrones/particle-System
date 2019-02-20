@@ -1,0 +1,22 @@
+var pSystem;
+var system;
+var sSystem;
+
+function setup() {
+  createCanvas(600, 600);
+  pSystem = new ParticleSystem(createVector(width/2, 50));
+  system = new BeamSystem(createVector(width/2, 50));
+  sSystem = new SparkSystem(createVector(300, 300));
+}
+
+function draw() {
+  background(51);
+  pSystem.run();
+  system.run();
+    for(var j = 0; j < pSystem.particles.length; j++){
+    if(pSystem.particles[j].intersects(system.beams[j]) ){
+    pSystem.particles[j].changeColor();
+    sSystem.run(system.beams.x+system.beams.width);
+    }
+  }
+}
