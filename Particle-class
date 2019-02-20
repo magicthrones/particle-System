@@ -1,0 +1,47 @@
+//Particle class
+class Particle {
+  constructor(position) {
+    this.acceleration = createVector(0, 0.05);
+    this.velocity = createVector(random(-1, 1), random(0, 1));
+    this.position = position.copy();
+    this.lifespan = 255;
+    this.r = 6
+    this.col = color(128, 128, 128, this.lifespan);
+    this.strokeCol = color(255, 255, 255, this.lifespan);
+  }
+  run(){
+    this.update();
+    this.display();
+  }
+  //Function to update the position of the particle
+  update(){
+    this.velocity.add(this.acceleration);
+    this.position.add(this.velocity);
+    this.lifespan -= 2;
+  }
+  //Function to display the particles
+  display(){
+    stroke(this.strokeCol);
+    strokeWeight(2);
+    fill(this.col);
+    ellipse(this.position.x, this.position.y, this.r*2, this.r*2);
+  }
+  //Check if the lifespan is still positive
+  isDead(){
+    return this.lifespan < 0;
+  }
+  //to change the color of the particles
+  changeColor(){
+    this.col = color(252, 150, 17);
+    this.strokeCol = color(165, 100, 14);
+  }
+  //checking if the beams intersect the particles
+  intersects(other){
+    var d = dist(this.x, this.y, other.x, other.y);
+    if (d < this.r + other.width){
+      return true;
+    } else {
+      return false;
+    }
+  }
+}
